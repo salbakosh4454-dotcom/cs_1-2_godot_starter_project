@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://bwo2tsegwct04"]
+[gd_scene load_steps=20 format=3 uid="uid://bwo2tsegwct04"]
 
 [ext_resource type="Texture2D" uid="uid://dat7h57mxtul0" path="res://sprites/Tiles/items/turret.png" id="1_sqxf6"]
+[ext_resource type="Script" uid="uid://n6ipgto0ijdb" path="res://scripts/turret.gd" id="1_xai4u"]
 [ext_resource type="Texture2D" uid="uid://lah76qx23g3n" path="res://sprites/Tiles/items/turret_projectile.png" id="2_8nnat"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0aqd3"]
@@ -107,8 +108,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qsjvi"]
 size = Vector2(7.25, 6.5)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_y7tkp"]
+radius = 146.49232
+
 [node name="MinoTauret6" type="CharacterBody2D"]
 position = Vector2(-2, -16)
+script = ExtResource("1_xai4u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_l45e7")
@@ -122,9 +127,18 @@ shape = SubResource("RectangleShape2D_qylyk")
 position = Vector2(0, -8)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Projectile"]
+position = Vector2(-1, 2)
 sprite_frames = SubResource("SpriteFrames_rbwvw")
 frame_progress = 0.589616
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile"]
 position = Vector2(2.625, 1)
 shape = SubResource("RectangleShape2D_qsjvi")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(2, -2)
+shape = SubResource("CircleShape2D_y7tkp")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
